@@ -12,6 +12,7 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
+
     @Autowired
     private UserRepository userRepository;
 
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
     user.getUserRoles().addAll(userRoles);
     local=this.userRepository.save(user);
         }
-        return null;
+        return local;
     }
 
     //getting user by username
