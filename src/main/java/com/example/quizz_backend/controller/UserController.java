@@ -5,6 +5,7 @@ import com.example.quizz_backend.model.User;
 import com.example.quizz_backend.model.UserRole;
 import com.example.quizz_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -17,11 +18,18 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+        private BCryptPasswordEncoder bcryptPasswordEncoder;
+
     //creating user
     @PostMapping("/")
     public User createUser(@RequestBody User user) throws Exception {
 
         user.setProfile("default.png");
+//        encodeing password with bcryptpassword
+
+        user.setPassword(this.bcryptPasswordEncoder.encode(user.getPassword()));
 
         Set<UserRole> roles = new HashSet<>();
 
