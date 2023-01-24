@@ -11,31 +11,31 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long cid;
 
     private String title;
 
     private String description;
 
-    @OneToMany(mappedBy = "category", fetch =FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Quiz> quizzes = new LinkedHashSet<>();
 
     public Category() {
     }
 
-    public Category(Long id, String title, String description) {
-        this.id = id;
+    public Category( String title, String description) {
         this.title = title;
         this.description = description;
+
     }
 
-    public Long getId() {
-        return id;
+    public Long getCid() {
+        return cid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCid(Long cid) {
+        this.cid = cid;
     }
 
     public String getTitle() {
@@ -53,4 +53,14 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Set<Quiz> getQuizzes() {
+        return quizzes;
+    }
+
+    public void setQuizzes(Set<Quiz> quizzes) {
+        this.quizzes = quizzes;
+    }
 }
+
+
