@@ -1,5 +1,7 @@
 package com.example.quizz_backend.service.impl;
 
+import com.example.quizz_backend.helper.UserFoundException;
+import com.example.quizz_backend.helper.UserNotFoundException;
 import com.example.quizz_backend.model.User;
 import com.example.quizz_backend.model.UserRole;
 import com.example.quizz_backend.repo.RoleRepository;
@@ -19,14 +21,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository reloRepository;
 
+    //creating user
     @Override
     public User createUser(User user, Set<UserRole> userRoles) throws Exception {
 
         User local=this.userRepository.findByUsername(user.getUsername());
         if(local !=null){
             System.out.println("User already there!!!");
-                throw new Exception("User already present");
-
+                throw new UserFoundException();
         } else{
             //user create
     for (UserRole ur:userRoles)

@@ -40,7 +40,7 @@ public class AuthenticateController {
         {
             authenticate(jwtRequest.getUsername(),jwtRequest.getPassword());
 
-        }catch (Exception e)
+        }catch (UsernameNotFoundException e)
         {
             e.printStackTrace();
             throw  new Exception("user not found");

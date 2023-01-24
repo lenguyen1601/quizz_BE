@@ -1,10 +1,13 @@
 package com.example.quizz_backend.controller;
 
+import com.example.quizz_backend.helper.UserFoundException;
 import com.example.quizz_backend.model.Role;
 import com.example.quizz_backend.model.User;
 import com.example.quizz_backend.model.UserRole;
 import com.example.quizz_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +23,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-        private BCryptPasswordEncoder bcryptPasswordEncoder;
+    private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     //creating user
     @PostMapping("/")
@@ -44,22 +47,24 @@ public class UserController {
 
         roles.add(userRole);
 
-        return this.userService.createUser(user,roles);
+        return this.userService.createUser(user, roles);
     }
 
     @GetMapping("/{username}")
-    public User getUser (@PathVariable("username")String username)
-    {
+    public User getUser(@PathVariable("username") String username) {
         return this.userService.getUser(username);
     }
 
     //delete user by id
     @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable("userId")Long userId){
+    public void deleteUser(@PathVariable("userId") Long userId) {
         this.userService.deleteUser(userId);
     }
 
     //update api
+    @ExceptionHandler(UserFoundException.class)
+    public ResponseEntity<?> exceptionHandler(UserFoundException ex) {
+        return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
 
-
+    }
 }
