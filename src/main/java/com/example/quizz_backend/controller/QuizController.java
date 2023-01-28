@@ -1,10 +1,13 @@
 package com.example.quizz_backend.controller;
 
+import com.example.quizz_backend.model.exam.Category;
 import com.example.quizz_backend.model.exam.Quiz;
 import com.example.quizz_backend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -48,6 +51,13 @@ public class QuizController {
     public void delete(@PathVariable("qid") Long qid)
     {
         this.quizService.deleteQuiz(qid);
+    }
+    @GetMapping("/category/{cid}")
+    public List<Quiz> getQuizzesOfCategory(@PathVariable("cid")Long cid)
+    {
+        Category category = new Category();
+        category.setCid(cid);
+        return this.quizService.getQuizzesOfCategory(category );
     }
 
 }
